@@ -1,0 +1,30 @@
+packages installed:
+Microsoft.EntityFrameworkCore.SqlServer:Connect ASP.NET Core to SQL Server
+Microsoft.EntityFrameworkCore.Design:Support EF Core migrations
+AutoMapper:Map entities to DTOs
+Microsoft.AspNetCore.Authentication.JwtBearer:JWT
+Konscious.Security.Cryptography.Argon2:password hashing using Argon2
+
+docker file and not docker-compose because -compose define how to run multiples containers, but dockerfile define how a single container works
+
+Notice that:
+[Required]---> this for data annotation
+public required string MotDePasseHash { get; set; }---> this for c# compilation
+
+(TypeName = "decimal(18,3)")why?
+to force sql to create a column decimal not fload beause sql if u typed 12.59, he convert it directly to 12.6 so to prevent this round behaviour we force it to create this column
+and 18,3, the 18 is the number of digits and 3 dicimal digits so for 148.345 example it will be saved as 148.345 (if it was 18,2, that will be saved 148.35)
+
+LigneCommande.cs
+PrixUnitaire is copied (snapshotted) from Produit.Prix at order time. Why: if you later change a product’s price, past orders must keep showing the price the client actually paid.
+
+
+IGenericRepository:The professor wrote IEmployeeRepository with 5 near-identical methods (GetEmployeesAsync, GetEmployeeAsync, AjouterEmployee...). You have 7 entities — repeating that by hand means ~35 near-duplicate methods. IGenericRepository<T> factors the common CRUD into one generic contract; entity-specific repositories (next step) add only what’s actually different per entity.
+
+for the interfaces(repos)
+
+RefreshToken and AuditLog I’ll handle through dedicated services instead of repositories (next steps), since they’re written-to internally rather than queried by controllers.
+
+
+IUnitOfWork.cs file 
+. Example of why it matters: creating a Commande involves inserting the Commande row, several LigneCommande rows, and decrementing Produit.Stock — four separate writes that must all succeed or all fail together. Without Unit of Work, each repository might call SaveChanges() separately, risking a half-committed state if something fails midway. With it, the service calls unitOfWork.Commandes.AddAsync(...), then unitOfWork.Produits.UpdateAsync(...), then one unitOfWork.SaveChangesAsync() at the end.
