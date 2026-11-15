@@ -1,9 +1,8 @@
 ﻿using StoreBackEnd.Api.Core.Entities;
 using StoreBackEnd.Api.Core.Interfaces;
 using StoreBackEnd.Api.Infrastructure.Data;
-using StoreBackEnd.Api.Infrastructure.Repositories;
 
-namespace BoutiqueEnLigne.Api.Infrastructure.Repositories
+namespace StoreBackEnd.Api.Infrastructure.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {

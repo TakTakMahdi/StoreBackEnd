@@ -1,0 +1,13 @@
+## .NET
+bin/
+obj/
+
+## Secrets — never commit real credentials
+.env
+appsettings.Development.json
+appsettings.Production.json
+
+## IDE
+.vs/
+.vscode/
+*.user

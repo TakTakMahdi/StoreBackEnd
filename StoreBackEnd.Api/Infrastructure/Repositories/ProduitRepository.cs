@@ -14,5 +14,10 @@ namespace StoreBackEnd.Api.Infrastructure.Repositories
                 .Include(p => p.Categorie)
                 .Where(p => p.Stock <= p.StockMinimum)
                 .ToListAsync();
+
+        Task IProduitRepository.AddAsync(Produit produit)
+        {
+            return AddAsync(produit);
+        }
     }
 }
